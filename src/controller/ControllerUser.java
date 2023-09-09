@@ -1,6 +1,10 @@
 package controller;
 
+import model.User;
+import service.CrudUser;
 import service.CrudUserImpl;
+
+import java.util.List;
 
 public class ControllerUser {
 
@@ -9,7 +13,11 @@ public class ControllerUser {
     private String headers;
     private String body;
     private int id;
-    private CrudUserImpl crud;
+
+    public CrudUserImpl crud;
+
+    public String response;
+    private CrudUser user;
 
     public ControllerUser(String metodo, String url, String headers, String body, CrudUserImpl crud) {
         this.metodo = metodo;
@@ -17,6 +25,12 @@ public class ControllerUser {
         this.headers = headers;
         this.body = body;
         this.crud = crud;
+        if (metodo.equals("GET")) {
+            getUsers();
+        }
+        else if (metodo.equals("POST")) {
+            postUser(body);
+        }
     }
 
     public ControllerUser(String metodo, String url, String headers, String body, int id, CrudUserImpl crud) {
@@ -26,27 +40,37 @@ public class ControllerUser {
         this.body = body;
         this.id = id;
         this.crud = crud;
+        switch (metodo) {
+            case "GET" -> {
+                getUsersById(id);
+            }
+            case "PUT" -> {
+                putUserId(body, id);
+            }
+            case "DELETE" -> {
+                deleteUserById(id);
+            }
+        }
     }
 
-    private String getUsers() {
-
-        return "Careculo";
+    private void getUsers() {
+        crud.readAll();
     }
 
-    private String getUsersById(int id) {
-        return "Careverga";
+    private void getUsersById(int id) {
+        crud.findById(id);
     }
 
-    private String postUser(String body) {
-        return "Carepicha";
+    private void postUser(String body) {
+        crud.create(body);
     }
 
-    private String deleteUserById(int id) {
-        return "Caredelete";
+    private void deleteUserById(int id) {
+        crud.deleteById(id);
     }
 
-    private String putUserId(String body, int id) {
-        return "Careputa";
+    private void putUserId(String body, int id) {
+        crud.updateById(body, id);
     }
 
     public String getUrl() {

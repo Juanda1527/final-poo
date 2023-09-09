@@ -10,8 +10,13 @@ public class Main {
     public static void main(String[] args) {
         CrudUserImpl crud = new CrudUserImpl();
 
-        ControllerUser request = new ControllerUser("GET", url, "Content-Type: application/json", null, crud);
-
-
+        ControllerUser request = new ControllerUser(
+                "DELETE",
+                url,
+                "Content-Type: application/json",
+                "Sofia Vergara, sverga@gmail.com, 3124652346",
+                1,
+                crud
+        );
     }
 }

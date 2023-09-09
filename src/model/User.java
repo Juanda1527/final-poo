@@ -10,11 +10,20 @@ public class User {
     private String email;
     private String phone;
 
-    public User(String names, String email, String phone) {
+    public User(String body) {
+        String[] data = parseBody(body);
         this.id = nextId++;
-        this.names = names;
-        this.email = email;
-        this.phone = phone;
+        this.names = data[0];
+        this.email = data[1];
+        this.phone = data[2];
+    }
+
+    String[] parseBody(String body) {
+        String[] values = body.split(",");
+        for (int i = 0; i < values.length; i++) {
+            values[i] = values[i].trim();
+        }
+        return values;
     }
 
     public int getId() {
